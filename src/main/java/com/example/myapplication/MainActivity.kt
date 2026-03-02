@@ -88,6 +88,16 @@ class MainActivity : ComponentActivity() {
             val p = createPerson()
             println(p)
 
+            //Hands-On
+            val students = mutableListOf(
+                Student("Arthur", "12345", 10.0, 10.0),
+                Student("Carla", "11345", 7.0, 8.0),
+                Student("Leonardo", "12457", 4.0, 5.0)
+            )
+            students.forEach{it.showReport()}
+
+            val best = students.maxByOrNull {it.calculateMedia()}
+            println("\nBest student ${best?.name}")
         }
     }
 
@@ -107,5 +117,31 @@ class MainActivity : ComponentActivity() {
 
         return Person(name, age, height)
 
+    }
+    //Hands-on
+    data class Student(val name:String, val registration:String, val score1:Double, val score2:Double){
+
+        fun calculateMedia(): Double = (score1 + score2) / 2
+
+        fun situation():String{
+            val media = calculateMedia()
+            return when{
+                media >= 7.0 -> "Approved"
+                media >= 5.0 -> "Retake"
+                else -> "Flunked"
+            }
+
+        }
+
+        fun showReport(){
+            println("==== Report ====")
+            println("Student: $name ($registration)")
+            println("Score 1: $score1")
+            println("Score 2: $score2")
+            println("Media: ${calculateMedia()}")
+            println("Situation: ${situation()}")
+            println("==== Report ====")
+
+        }
     }
 }
